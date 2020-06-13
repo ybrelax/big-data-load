@@ -1,7 +1,8 @@
 import React from "react";
 import { Component } from "react";
 
-export default class AppContainer extends Component {
+export default class AppContainer extends Component<any, any> {
+  // private prevY = 0;
   constructor(pro: any) {
     super(pro);
     this.state = {
@@ -10,8 +11,16 @@ export default class AppContainer extends Component {
   }
 
   componentWillMount() {
+    console.log('this.', this)
     this.getSelectList();
   }
+
+  // private scrollAndLoading() {
+  //   if (window.scrollY > this.prevY) {
+  //     this.prevY = window.scrollY;
+  //     // console.log(poll);
+  //   }
+  // }
 
   private getSelectList() {
     fetch("http://localhost:3000/api/select/list")
@@ -20,11 +29,25 @@ export default class AppContainer extends Component {
       })
       .then(function (myJson) {
         const list = myJson.data;
+        this.setStat
+        this.setState({
+          list: list.slice(0, 100),
+        });
         console.log(list);
       });
   }
 
   render() {
-    return <div>你好</div>;
+    const { list } = this.state;
+    return (
+      <div>
+        {list.map((item) => (
+          <div>
+            <span>{item.name}: </span>
+            <span>{item.title}</span>
+          </div>
+        ))}
+      </div>
+    );
   }
 }
