@@ -1,13 +1,39 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const apiMocker = require("mocker-api");
 
 module.exports = {
-    deServer: {
-        port: 3000
+  devServer: {
+    port: 3000,
+    before(app) {
+      apiMocker(app, path.resolve("./mock/index.js"));
     },
-    plugin: [
-        new HtmlWebpackPlugin({
-            template: './public/index.html'
-        })
-    ]
-}
+  },
+  entry: "./src/index",
+  resolve: {
+    extensions: [".tsx", ".ts", ".js", ".jsx"],
+  },
+  module: {
+    rules: [
+      {
+        test: /\.tsx?$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: [
+              "@babel/preset-env",
+              "@babel/preset-react",
+              "@babel/preset-typescript",
+            ],
+          },
+        },
+      },
+    ],
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: "./public/index.html",
+    }),
+  ],
+};
