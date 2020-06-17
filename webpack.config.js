@@ -29,6 +29,10 @@ module.exports = {
           },
         },
       },
+      {
+        test: /\.(le|c)ss$/,
+        use: ['style-loader', 'css-loader', 'less-loader']
+      }
     ],
   },
   plugins: [

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Hook from "./hooks/index";
 
 export default class AppContainer extends Component<any, any> {
   private prevY = 0;
@@ -12,7 +13,7 @@ export default class AppContainer extends Component<any, any> {
   }
 
   componentWillMount() {
-    this.getSelectList();
+    // this.getSelectList();
     window.addEventListener('scroll', () => this.scrollAndLoading(), false)
   }
 
@@ -46,6 +47,7 @@ export default class AppContainer extends Component<any, any> {
     console.log('更新了')
     return (
       <div>
+        <Hook/>
         <div>
           {list.map((item) => (
             <div key={item.name}>
